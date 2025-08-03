@@ -1,173 +1,167 @@
-Termux Chess LAN
-Play chess offline on Android phones using mobile hotspot - perfect for metro, trains, or anywhere without internet connectivity.
+
+# ♟️ Termux Chess LAN
+
+**Offline Chess via Hotspot – No Internet, No Problem!**  
+Play full chess games with your friend using two Android phones connected via mobile hotspot.  
+Perfect for **metro rides**, **train journeys**, **chai breaks**, or **when Jio betrays you again 😤📶**.
+
+---
+
+## 📸 Preview
+
+<table>
+<tr>
+<td><img src="screenshots/termux-setup.png" width="250"/><br><sub>📱 Termux Setup</sub></td>
+<td><img src="screenshots/browser-game.png" width="250"/><br><sub>🌐 Game UI</sub></td>
+<td><img src="screenshots/match-result.png" width="250"/><br><sub>✅ Game Result</sub></td>
+</tr>
+</table>
 
 
 
-🎯 Why This Project?
-Ever wanted to play chess with a friend during a metro ride or in places with no internet? This project transforms two Android phones into a complete chess gaming setup using just a mobile hotspot and Termux. No internet required, no external servers needed - just pure offline multiplayer chess.
+---
 
-✨ Features
-🏠 Create or Join Rooms — Easy room creation & joining with unique codes
-⚡ Real-Time Gameplay — Synchronized moves using WebSocket (socket.io)
-⏱️ Move History — Track all moves made in the game
-📱 Mobile Optimized — Responsive design perfect for phone screens
-🌐 Offline Play — Works completely offline using mobile hotspot
-🔄 Game Controls — Reset, undo moves, and leave game options
-🎮 Drag & Drop — Intuitive piece movement with click or drag
-🛠️ Technology Stack
-Frontend: React, Vite, TailwindCSS
-Backend: Node.js, Express, Socket.IO
-Chess Engine: Chess.js library
-Platform: Android (Termux), Mobile Hotspot
-Real-time Communication: WebSockets
-📋 Prerequisites
-2 Android phones
-Termux app installed on one phone (server)
-Mobile hotspot capability
-Basic familiarity with terminal commands
-🚀 Step-by-Step Setup
-Phase 1: Set Up Mobile Hotspot
-On Phone 1 (Server Phone):
+## 🎯 Why This Project?
 
-Go to Settings → Network & Internet → Hotspot & Tethering
-Enable Wi-Fi Hotspot
-Set a hotspot name (e.g., "ChessGame") and password
-Important: Turn OFF mobile data to avoid data charges
-Note down the hotspot name and password
-On Phone 2 (Client Phone):
+Imagine this: You're in the Delhi Metro 🚇. There's **no internet**, but your colleague is like,  
+*"Bro, ek chess ho jaaye?"*
 
-Go to Wi-Fi Settings
-Connect to Phone 1's hotspot using the password
-Wait for connection confirmation
-Phase 2: Install Termux on Phone 1
-Download Termux from F-Droid (recommended) or Google Play Store
-Open Termux and wait for initial setup
-Update packages:
+And you're like:  
+**"Nahi bhai, ab main tera phone nahi pakadunga. Apne phone pe hi khel."**
+
+So I built this — a fun, zero-internet, mobile-hotspot powered chess game 🧠♟️
+
+---
+
+## ✨ Features
+
+- 🏠 **Create / Join Game Rooms** — Simple custom room codes like `metro123`
+- ⚡ **Real-Time Sync** — Moves sync instantly using WebSockets
+- 🔄 **Controls** — Reset, Undo, Leave whenever you want
+- 🎮 **Drag & Drop UI** — Easy on touchscreen
+- 📱 **Mobile-Optimized** — Works great on phones
+- 🌐 **Works 100% Offline** — Just a hotspot, no data
+
+---
+
+## 🛠️ Tech Stack (a.k.a. What’s under the hood)
+
+| Layer       | Tools & Libraries               |
+|-------------|----------------------------------|
+| Frontend    | React, Vite, TailwindCSS         |
+| Backend     | Node.js, Express, Socket.IO      |
+| Chess Logic | [Chess.js](https://github.com/jhlywa/chess.js) |
+| Hosting     | Termux on Android 🤖             |
+| Connection  | Hotspot LAN via WebSocket        |
+
+---
+
+## 📋 What You’ll Need
+
+- 📱 Two Android phones  
+- 📡 One phone with **mobile hotspot**
+- 🧰 [Termux](https://f-droid.org/packages/com.termux/) installed (on server phone)
+- 🌐 Node.js + npm in Termux
+
+---
+
+## 🚀 Setup Guide (Quick & Fun)
+
+### 🔥 Step 1: Setup Hotspot
+
+**On Phone 1 (Server):**
+- Go to: `Settings → Hotspot & Tethering`
+- Turn ON Wi-Fi hotspot 🔥
+- Turn OFF mobile data (save that 4G 😎)
+
+**On Phone 2 (Client):**
+- Connect to Phone 1’s hotspot via Wi-Fi
+
+---
+
+### 📦 Step 2: Setup Termux (Server Phone)
+
+Open Termux:
+
+```bash
 pkg update && pkg upgrade
-
-
-Phase 3: Install Node.js and Git
-In Termux on Phone 1:
-
-# Install Node.js and Git
 pkg install nodejs git
-
-# Verify installation
 node --version
 npm --version
+````
 
+---
 
-Phase 4: Clone and Setup Chess Game
-# Clone the chess project
-git clone https://github.com/yourusername/termux-chess-lan.git
+### 🧠 Step 3: Clone the Project
 
-# Navigate to project
-cd termux-chess-lan
+```bash
+git clone https://github.com/shashikrsingh786/android-offline-chess.git
+cd android-offline-chess
+```
 
-# Check project structure
-ls -la
+---
 
+### 🚦 Step 4: Start the Server
 
-Phase 5: Start the Server
-Terminal 1 - Server:
-
-# Install server dependencies
+```bash
 cd server
 npm install
-
-# Start the server
 npm start
+```
+
 You should see:
 
-Server is online on all network interfaces
+```
+Server running on all network interfaces on port 3001
+```
 
+---
 
-Phase 6: Start the Client
-Open a new Termux session (swipe down, tap "New Session"):
+### 💻 Step 5: Run the Client UI (React App)
 
-# Navigate to client folder
-cd ~/termux-chess-lan/client
+Open a new Termux session (Swipe down → New Session):
 
-# Install client dependencies
+```bash
+cd ~/android-offline-chess/client
 npm install
-
-# Start the client
 npm run dev
-You should see:
+```
 
-➜  Local:   http://localhost:5173/
-➜  Network: http://192.168.43.1:5173/
+---
+
+### 📲 Step 6: Open in Browser
+
+**Phone 1 (Server):**
+`http://localhost:5173`
+
+**Phone 2 (Client):**
+`http://192.168.43.1:5173`
+(Or whatever IP is shown in terminal of phone 1)
+
+---
+
+## 🕹️ How to Play
+
+1. **Create Room**
+   Enter any room code (e.g. `metroOP`) → click Join → you’re White
+
+2. **Join Room**
+   Friend enters same code → joins as Black
+
+3. **Make Moves**
+   Drag pieces or tap → easy!
+
+4. **Control Game**
+   Use Reset, Undo, Leave as needed
+
+---
+
+## 📈 Real-Life Use Case
+
+> Me and my office buddy wanted to play chess on our **own phones**.
+> Metro network was trash as usual 🫠.
+> So I made this. Now we challenge each other daily while people around us scroll reels 😎📵♟️
+
+---
 
 
-Phase 7: Access Game on Both Phones
-On Phone 1 (Server):
-
-Open browser → http://localhost:5173
-On Phone 2 (Client):
-
-Open browser → http://192.168.43.1:5173 (use the Network IP shown)
-
-
-Phase 8: Play Chess!
-On Phone 1:
-
-Enter a room code (e.g., "metro123")
-Click "Join" - you'll be assigned White pieces
-Share the room code with your friend
-On Phone 2:
-
-Enter the same room code ("metro123")
-Click "Join" - you'll be assigned Black pieces
-Start playing!
-
-
-🎮 How to Play
-Create Room: Enter any room code and click "Join" to create a new game
-Join Room: Enter an existing room code to join a friend's game
-Move Pieces: Click and drag pieces or click source then destination
-Game Controls: Use Reset, Undo, or Leave buttons as needed
-Room Codes: Share simple codes like "chess1", "metro", "train" etc.
-🔧 Troubleshooting
-If Phone 2 can't connect:
-
-Verify both phones are on the same hotspot
-Try common hotspot IPs: 192.168.43.1:5173, 192.168.1.1:5173
-Check if both server (port 3001) and client (port 5173) are running
-If moves don't sync:
-
-Refresh both browsers
-Rejoin the same room code
-Restart the server if needed
-Network IP Detection:
-
-# In Termux, find your IP
-ifconfig
-🏗️ Development Journey
-This project was born out of a simple need - playing chess during metro rides without internet. Here's how it evolved:
-
-Research Phase: Explored existing LAN chess solutions on GitHub
-Architecture Decision: Chose web-based approach for cross-platform compatibility
-Platform Selection: Termux on Android for server hosting capabilities
-Network Configuration: Overcame CORS and localhost restrictions for LAN access
-Mobile Optimization: Ensured responsive design for phone screens
-Testing: Validated in real metro scenarios with mobile hotspot
-🤝 Contributing
-Contributions are welcome! Areas for improvement:
-
-[ ] Add pawn promotion feature
-[ ] Implement game timer/clock
-[ ] Add sound effects for moves
-[ ] Create native Android app version
-[ ] Add spectator mode
-[ ] Implement game replay feature
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-🙏 Acknowledgments
-Original LAN-Chess concept by officialpranav
-Chess.js library for game logic
-Socket.IO for real-time communication
-Termux community for Android terminal environment
-Built with ❤️ for offline chess enthusiasts
-
-Perfect for metro rides, train journeys, camping trips, or anywhere you want to play chess without internet!
