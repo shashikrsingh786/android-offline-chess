@@ -10,12 +10,28 @@ Perfect for **metro rides**, **train journeys**, **chai breaks**, or **when Jio 
 ## 📸 Preview
 
 <table>
-<tr>
-<td><img src="screenshots/termux-setup.png" width="250"/><br><sub>📱 Termux Setup</sub></td>
-<td><img src="screenshots/browser-game.png" width="250"/><br><sub>🌐 Game UI</sub></td>
-<td><img src="screenshots/match-result.png" width="250"/><br><sub>✅ Game Result</sub></td>
-</tr>
+  <tr>
+    <td><img width="250" alt="Media (6)" src="https://github.com/user-attachments/assets/6ff6d549-60e8-4033-91f2-ed21a7874f7d" />
+<br><sub>📱 Install Step 1</sub></td>
+    <td><img width="250"  alt="Media (5)" src="https://github.com/user-attachments/assets/0d24ddad-0931-413b-8d75-d6578819adea" />
+<br><sub>📱 Install Step 2</sub></td>
+    <td><img width="250"  alt="Media (3)" src="https://github.com/user-attachments/assets/f5092222-a108-407e-8cae-143445f0ffcf" />
+<br><sub>🚀 Server Start</sub></td>
+    <td><img width="250"  alt="Media (4)" src="https://github.com/user-attachments/assets/4bab61fc-7833-4e4f-b911-622764933b6d" />
+<br><sub>📶 Client Start</sub></td>
+  </tr>
+  <tr>
+    <td>
+
+<img width="250" alt="waiting" src="https://github.com/user-attachments/assets/de23667d-6711-4402-8731-d2046dfb32f1" />
+
+
+<br><sub>⏳ Waiting for Opponent</sub></td>
+    <td><img width="250" height="1600" alt="Media (1)" src="https://github.com/user-attachments/assets/e36bd3f7-b6eb-48c9-b2b1-2571b4ab7a6c" />
+<br><sub>🎮 Game in Progress</sub></td>
+  </tr>
 </table>
+
 
 
 
