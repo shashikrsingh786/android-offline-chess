@@ -172,10 +172,35 @@ function App() {
         <p className='text-gray-300 text-lg'>Play chess with friends on your local network</p>
       </div>
 
+      {/* Turn Indicator */}
+      {(status === 'ready' || status === 'waiting') && (
+        <div className='mb-4 flex items-center justify-center gap-4'>
+          <div className='text-white text-lg font-medium'>Current Turn:</div>
+          <div className='flex items-center gap-2'>
+            <div className={`w-6 h-6 rounded-full ${turn === 'w' ? 'bg-white' : 'bg-gray-800'} border-2 border-gray-400 ${turn === 'w' ? 'animate-pulse shadow-lg shadow-white/50' : ''}`}></div>
+            <span className='text-white font-medium'>White</span>
+          </div>
+          <div className='flex items-center gap-2'>
+            <div className={`w-6 h-6 rounded-full ${turn === 'b' ? 'bg-gray-800' : 'bg-white'} border-2 border-gray-400 ${turn === 'b' ? 'animate-pulse shadow-lg shadow-gray-800/50' : ''}`}></div>
+            <span className='text-white font-medium'>Black</span>
+          </div>
+        </div>
+      )}
+
+      {/* Your Turn Indicator */}
+      {status === 'ready' && turn === color[0] && (
+        <div className='mb-4 flex items-center justify-center'>
+          <div className='bg-green-500 bg-opacity-20 border border-green-500 rounded-full px-4 py-2 flex items-center gap-2'>
+            <div className='w-3 h-3 bg-green-400 rounded-full animate-pulse'></div>
+            <span className='text-green-300 font-medium'>Your Turn</span>
+          </div>
+        </div>
+      )}
+
       {/* Main Game Area */}
       <div className='flex flex-col lg:flex-row gap-6 items-center justify-center w-full max-w-6xl'>
         {chessBoard({ board: board, handleSquareClick: handleSquareClick, handleDragStart: handleDragStart, handleDrop: handleDrop, availableMoves: availableMoves, history: history, isCheck: isCheck, isGameOver: isGameOver, turn: turn, selectedSquare: selectedSquare, color: color })}
-        {panel({ history: history, tableEnd: tableEnd, socket: socket, status: status, color: color, gameId: gameId, showLeaveConfirm: showLeaveConfirm, setShowLeaveConfirm: setShowLeaveConfirm })}
+        {panel({ history: history, tableEnd: tableEnd, socket: socket, status: status, color: color, gameId: gameId, showLeaveConfirm: showLeaveConfirm, setShowLeaveConfirm: setShowLeaveConfirm, turn: turn })}
       </div>
 
       {/* Credits */}
@@ -296,7 +321,7 @@ function squareUnderlay({ square, coord, history, availableMoves, isCheck, turn,
   )
 }
 
-function controlPanel({ history, tableEnd, socket, status, gameId, showLeaveConfirm, setShowLeaveConfirm }) {
+function controlPanel({ history, tableEnd, socket, status, gameId, showLeaveConfirm, setShowLeaveConfirm, turn }) {
   const handleLeaveGame = () => {
     socket.emit('leave', gameId)
     setShowLeaveConfirm(false)
@@ -330,30 +355,17 @@ function controlPanel({ history, tableEnd, socket, status, gameId, showLeaveConf
 
       {/* Game Actions */}
       <div className='space-y-3'>
-        <div className='grid grid-cols-2 gap-3'>
-          <button
-            className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg'
-            onClick={() => socket.emit('undo', gameId)}
-          >
-            <div className='flex items-center justify-center gap-2'>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-              </svg>
-              Undo
-            </div>
-          </button>
-          <button
-            className='bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg'
-            onClick={() => socket.emit('reset', gameId)}
-          >
-            <div className='flex items-center justify-center gap-2'>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Reset
-            </div>
-          </button>
-        </div>
+        <button
+          className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg'
+          onClick={() => socket.emit('undo', gameId)}
+        >
+          <div className='flex items-center justify-center gap-2'>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+            </svg>
+            Undo Move
+          </div>
+        </button>
         <button
           className='w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg'
           onClick={() => setShowLeaveConfirm(true)}
@@ -472,12 +484,12 @@ function gameJoinPanel({ socket, status, color, gameId }) {
 }
 
 //render the correct panel based on the game status
-function panel({ history, tableEnd, socket, status, color, gameId, showLeaveConfirm, setShowLeaveConfirm }) {
+function panel({ history, tableEnd, socket, status, color, gameId, showLeaveConfirm, setShowLeaveConfirm, turn }) {
   //note tableEnd is a ref, i didnt want to rename it cuz id have to refactor :)
   if (status === 'lobby' || status === 'fail') {
     return (gameJoinPanel({ socket: socket, status: status, color: color, gameId: gameId }))
   } else {
-    return (controlPanel({ history: history, tableEnd: tableEnd, socket: socket, status: status, gameId: gameId, showLeaveConfirm: showLeaveConfirm, setShowLeaveConfirm: setShowLeaveConfirm }))
+    return (controlPanel({ history: history, tableEnd: tableEnd, socket: socket, status: status, gameId: gameId, showLeaveConfirm: showLeaveConfirm, setShowLeaveConfirm: setShowLeaveConfirm, turn: turn }))
   }
 }
 
